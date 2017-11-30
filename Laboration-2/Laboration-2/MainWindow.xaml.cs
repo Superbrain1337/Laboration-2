@@ -21,11 +21,14 @@ namespace Laboration_2
     /// </summary>
     public partial class MainWindow : Window
     {
+        GuiGenerator guiGenerator = new GuiGenerator();
+
         public MainWindow()
         {
             InitializeComponent();
-
-            GameContext context = new GameContext();
+            
+            
+                        GameContext context = new GameContext();
             //AddItems(context);
 
             var query = from x in context.Players
@@ -33,6 +36,61 @@ namespace Laboration_2
 
             foreach (var y in query)
                 playerListbox.Items.Add(y);
+            
+            LoadPlayerListBox();
+        }
+
+        private void LoadPlayerListBox()
+        {
+
+        }
+
+        private void ListBoxPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            guiGenerator.GenerateListBoxScore(ListBoxPlayer.SelectedIndex, allData, ref ListBoxScore);
+        }
+
+
+
+        private void TextBoxName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+
+                if (TextBoxName.Text.Length != 0)
+                {
+
+
+                    int nameIndex = allData.gameData.FindIndex(x => x.Name.ToLower() == TextBoxName.Text.ToLower());
+
+                    if (nameIndex != -1)
+                    {
+
+                        guiGenerator.GenerateListBoxScore(nameIndex, allData, ref ListBoxScore);
+                    }
+                    else
+                    {
+                        allData.gameData.Add(new Player(TextBoxName.Text));
+                        ListBoxPlayer.Items.Add(TextBoxName.Text);
+                        ListBoxScore.Items.Clear();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Du angav inget namn!");
+                }
+
+
+            }
+
+            
+        }
+
+        private void ListBoxScore_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+
         }
 
         private void AddItems(GameContext context)
@@ -58,3 +116,4 @@ namespace Laboration_2
         }
     }
 }
+

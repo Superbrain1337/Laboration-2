@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Laboration_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="427.889" Width="652.889">
     <Grid>
-        <ListBox x:Name="playerListbox" HorizontalAlignment="Left" Height="100" Margin="107,101,0,0" VerticalAlignment="Top" Width="100"/>
+        <ListBox x:Name="ListBoxPlayer" HorizontalAlignment="Left" Height="129" Margin="46,36,0,0" VerticalAlignment="Top" Width="98" SelectionChanged="ListBoxPlayer_SelectionChanged"/>
+        <ListBox x:Name="ListBoxScore" HorizontalAlignment="Left" Height="288" Margin="270,36,0,0" VerticalAlignment="Top" Width="195" SelectionChanged="ListBoxScore_SelectionChanged"/>
+        <Label HorizontalAlignment="Left" Margin="455,76,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="25" Margin="18,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" KeyDown="TextBoxName_KeyDown"/>
+        <Label x:Name="LabelInfoName" Content="Insert name and press enter" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
+
 
     </Grid>
 </Window>
