@@ -21,8 +21,10 @@ namespace Laboration_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        GuiGenerator guiGenerator = new GuiGenerator();
-        GameContext context;
+        private GuiGenerator guiGenerator = new GuiGenerator();
+        private GameContext context;
+
+        private string nameInput;
 
 
         public MainWindow()
@@ -45,18 +47,19 @@ namespace Laboration_2
 
         private void TextBoxName_KeyDown(object sender, KeyEventArgs e)
         {
+            TextBoxLevelName.IsEnabled = true;
+            nameInput = TextBoxName.Text;
+
             if (e.Key == Key.Enter)
             {
-                string name = TextBoxName.Text;
-
                 // Om empty vissa messagebox
-                if (name.Length != 0)
+                if (nameInput.Length != 0)
                 {
 
 
                     // Hittar alla levels som spelaren har kört på 
                     var playerQuearyData = (from x in context.Levels
-                                            where x.Players.All(y => y.Name == name)
+                                            where x.Players.All(y => y.Name == nameInput)
                                             select x).ToList();
                     
                     // Om spelare finns skriv all info till listbox
@@ -68,7 +71,7 @@ namespace Laboration_2
                     {
                         // Om ej finns skapa ny spelare
                         // Med det namnet
-                        AddNewPlayer(name);
+                        AddNewPlayer(nameInput);
                     }
 
 
@@ -135,6 +138,32 @@ namespace Laboration_2
 
             context.Levels.Add(l);
             context.SaveChanges();
+        }
+
+        private void TextBoxLevelName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string levelName = TextBoxLevelName.Text;
+                // Om empty vissa messagebox
+                if (!string.IsNullOrEmpty(TextBoxLevelName.Text))
+                {
+                    var playerQuearyData = from p in context.Players
+                                           where nameInput == p.Name
+                                           select p.Name;
+
+                    Level level = new Level() { Name = levelName, AmountOfMoves = 6, Players = new List<Player>() };
+
+                    Player player = new Player() { Name = nameInput, Scores = new List<Score>() };
+
+                    Score score = new Score() { Levels = level, AmountOfMovesUsed = 2 };
+
+                    level.Players.Add(player);
+                    player.Scores.Add(score);
+                    context.Levels.Add(level);
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
