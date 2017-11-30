@@ -22,32 +22,45 @@ namespace Laboration_2
     public partial class MainWindow : Window
     {
         GuiGenerator guiGenerator = new GuiGenerator();
+        GameContext context;
+
 
         public MainWindow()
         {
             InitializeComponent();
-            
-            
-                        GameContext context = new GameContext();
-            //AddItems(context);
+            context = new GameContext();
 
-            var query = from x in context.Players
-                        select x.Name;
-
-            foreach (var y in query)
-                playerListbox.Items.Add(y);
             
-            LoadPlayerListBox();
+            WriteNamesToListBox();
+
+            
         }
 
-        private void LoadPlayerListBox()
+        /// <summary>
+        /// Kod för debug syfte
+        /// </summary>
+        private void WriteNamesToListBox()
         {
 
-        }
+            // Kod för debug syfte så man ser
+            //vilka spelare som finns i databasen
 
-        private void ListBoxPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            guiGenerator.GenerateListBoxScore(ListBoxPlayer.SelectedIndex, allData, ref ListBoxScore);
+            var playerQuearyData = (from x in context.Levels
+                                    select x.Players.Select(y => y.Name)).ToList();
+
+
+
+            foreach (var val in playerQuearyData)
+            {
+                foreach (var val2 in val)
+                {
+                    ListBoxPlayer.Items.Add(val2);
+                }
+
+            }
+
+
+
         }
 
 
@@ -56,24 +69,39 @@ namespace Laboration_2
         {
             if (e.Key == Key.Enter)
             {
+                string name = TextBoxName.Text;
 
-                if (TextBoxName.Text.Length != 0)
+
+
+
+                // Om empty vissa messagebox
+                if (!string.IsNullOrEmpty(name))
                 {
 
+                    
+                    List<Level> levelsPlayerHavePlayed = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, name);
 
-                    int nameIndex = allData.gameData.FindIndex(x => x.Name.ToLower() == TextBoxName.Text.ToLower());
 
-                    if (nameIndex != -1)
+
+
+                    // Om spelare finns skriv all info till listbox
+                    if (levelsPlayerHavePlayed.Count > 0)
                     {
-
-                        guiGenerator.GenerateListBoxScore(nameIndex, allData, ref ListBoxScore);
+                        guiGenerator.GenerateListData(ref ListBoxStatsInfo, levelsPlayerHavePlayed,name);
                     }
                     else
                     {
-                        allData.gameData.Add(new Player(TextBoxName.Text));
-                        ListBoxPlayer.Items.Add(TextBoxName.Text);
-                        ListBoxScore.Items.Clear();
+                        // Om ej finns skapa ny spelare
+                        // Med det namnet
+                        AddNewPlayer(name);
+
+                        List<Level> getInfoAboutNewPlayer = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, name);
+
+                        guiGenerator.GenerateListData(ref ListBoxStatsInfo, getInfoAboutNewPlayer,name);
+
                     }
+
+                    TextBoxName.Text = "";
 
                 }
                 else
@@ -83,17 +111,41 @@ namespace Laboration_2
 
 
             }
-
             
         }
 
-        private void ListBoxScore_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
+
+
+        private void AddNewPlayer(string name)
+        {
+            Level l = new Level();
+            l.Name = "Level 01";
+            l.AmountOfMoves = 4;
+            l.Players = new List<Player>();
+
+            Player p = new Player();
+            p.Name = name;
+            p.Scores = new List<Score>();
+
+            Score s = new Score();
+
+
+
+            s.Levels = l;
+            s.AmountOfMovesUsed = 0;
+
+            l.Players.Add(p);
+            p.Scores.Add(s);
+
+            context.Levels.Add(l);
+            context.SaveChanges();
+
+            ListBoxPlayer.Items.Add(p.Name);
 
         }
 
-        private void AddItems(GameContext context)
+        private void AddItems()
         {
             Level l = new Level();
             l.Name = "Level 01";
@@ -105,6 +157,9 @@ namespace Laboration_2
             p.Scores = new List<Score>();
 
             Score s = new Score();
+
+
+
             s.Levels = l;
             s.AmountOfMovesUsed = 1;
 
@@ -113,6 +168,17 @@ namespace Laboration_2
 
             context.Levels.Add(l);
             context.SaveChanges();
+        }
+
+        private void ListBoxPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = ListBoxPlayer.SelectedItem;
+
+            List<Level> temp = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, item.ToString());
+
+            guiGenerator.GenerateListData(ref ListBoxStatsInfo, temp, item.ToString());
+
+
         }
     }
 }

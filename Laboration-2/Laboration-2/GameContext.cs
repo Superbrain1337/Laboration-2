@@ -11,6 +11,7 @@ namespace Laboration_2
     {
         private const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration-2-Database;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
+
         public GameContext() : base(connectionString) { }
 
         public DbSet<Level> Levels { get; set; }
