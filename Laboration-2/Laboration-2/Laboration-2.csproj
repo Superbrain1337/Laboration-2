@@ -75,13 +75,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    
-    <Compile Include="ConceptDataTest.cs" />
     <Compile Include="GuiGenerator.cs" />
-    
     <Compile Include="GameContext.cs" />
     <Compile Include="Level.cs" />
-    
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

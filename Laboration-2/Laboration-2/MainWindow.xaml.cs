@@ -22,58 +22,55 @@ namespace Laboration_2
     public partial class MainWindow : Window
     {
         GuiGenerator guiGenerator = new GuiGenerator();
+        GameContext context;
+
 
         public MainWindow()
         {
             InitializeComponent();
-            
-            
-                        GameContext context = new GameContext();
-            //AddItems(context);
-
-            var query = from x in context.Players
-                        select x.Name;
-
-            foreach (var y in query)
-                playerListbox.Items.Add(y);
-            
-            LoadPlayerListBox();
+            context = new GameContext();
+            WriteNamesToListBox();
         }
 
-        private void LoadPlayerListBox()
+
+        private void WriteNamesToListBox()
         {
-
+            // Hittar alla spelares namn och skriver ut i en
+            // listbox som används i debug syfte för att se vilka namn
+            // som finns i databasen
+            var playerQuearyData = from x in context.Levels
+                                   select x.Players.Select(y => y.Name).ToList();
+            
         }
-
-        private void ListBoxPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            guiGenerator.GenerateListBoxScore(ListBoxPlayer.SelectedIndex, allData, ref ListBoxScore);
-        }
-
-
 
         private void TextBoxName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
+                string name = TextBoxName.Text;
 
-                if (TextBoxName.Text.Length != 0)
+                // Om empty vissa messagebox
+                if (name.Length != 0)
                 {
 
 
-                    int nameIndex = allData.gameData.FindIndex(x => x.Name.ToLower() == TextBoxName.Text.ToLower());
-
-                    if (nameIndex != -1)
+                    // Hittar alla levels som spelaren har kört på 
+                    var playerQuearyData = (from x in context.Levels
+                                            where x.Players.All(y => y.Name == name)
+                                            select x).ToList();
+                    
+                    // Om spelare finns skriv all info till listbox
+                    if(playerQuearyData.Count > 0)
                     {
-
-                        guiGenerator.GenerateListBoxScore(nameIndex, allData, ref ListBoxScore);
+                        guiGenerator.GenerateListData(ref ListBoxStatsInfo,playerQuearyData);
                     }
                     else
                     {
-                        allData.gameData.Add(new Player(TextBoxName.Text));
-                        ListBoxPlayer.Items.Add(TextBoxName.Text);
-                        ListBoxScore.Items.Clear();
+                        // Om ej finns skapa ny spelare
+                        // Med det namnet
+                        AddNewPlayer(name);
                     }
+
 
                 }
                 else
@@ -87,13 +84,35 @@ namespace Laboration_2
             
         }
 
-        private void ListBoxScore_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+
+        private void AddNewPlayer(string name)
         {
+            Level l = new Level();
+            l.Name = "Level 01";
+            l.AmountOfMoves = 4;
+            l.Players = new List<Player>();
+
+            Player p = new Player();
+            p.Name = name;
+            p.Scores = new List<Score>();
+
+            Score s = new Score();
 
 
+
+            s.Levels = l;
+            s.AmountOfMovesUsed = 0;
+
+            l.Players.Add(p);
+            p.Scores.Add(s);
+
+            context.Levels.Add(l);
+            context.SaveChanges();
         }
 
-        private void AddItems(GameContext context)
+        private void AddItems()
         {
             Level l = new Level();
             l.Name = "Level 01";
@@ -105,9 +124,12 @@ namespace Laboration_2
             p.Scores = new List<Score>();
 
             Score s = new Score();
+
+
+
             s.Levels = l;
             s.AmountOfMovesUsed = 1;
-
+            
             l.Players.Add(p);
             p.Scores.Add(s);
 
