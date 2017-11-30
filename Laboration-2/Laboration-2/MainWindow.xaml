@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <ListBox x:Name="playerListbox" HorizontalAlignment="Left" Height="100" Margin="107,101,0,0" VerticalAlignment="Top" Width="100"/>
+
     </Grid>
 </Window>
