@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,32 +21,27 @@ namespace Laboration_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        AllData allData = new AllData();
         GuiGenerator guiGenerator = new GuiGenerator();
 
         public MainWindow()
         {
             InitializeComponent();
+            
+            
+                        GameContext context = new GameContext();
+            //AddItems(context);
 
-            allData.gameData.Add(new Player("Linus"));
-            allData.gameData.Add(new Player("André"));
+            var query = from x in context.Players
+                        select x.Name;
 
-            allData.gameData[0].AddNewScore(new Score(10), new Level("Level 1", 10));
-            allData.gameData[0].AddNewScore(new Score(6), new Level("Level 2", 6));
-
-            allData.gameData[1].AddNewScore(new Score(5), new Level("Level 1", 10));
-            allData.gameData[1].AddNewScore(new Score(3), new Level("Level 2", 6));
-
+            foreach (var y in query)
+                playerListbox.Items.Add(y);
+            
             LoadPlayerListBox();
         }
 
         private void LoadPlayerListBox()
         {
-            for (int i = 0; i != allData.gameData.Count; i++)
-            {
-
-                ListBoxPlayer.Items.Add(allData.gameData[i].Name);
-            }
 
         }
 
@@ -94,6 +90,29 @@ namespace Laboration_2
         private void ListBoxScore_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+
+        }
+
+        private void AddItems(GameContext context)
+        {
+            Level l = new Level();
+            l.Name = "Level 01";
+            l.AmountOfMoves = 4;
+            l.Players = new List<Player>();
+
+            Player p = new Player();
+            p.Name = "Linus";
+            p.Scores = new List<Score>();
+
+            Score s = new Score();
+            s.Levels = l;
+            s.AmountOfMovesUsed = 1;
+
+            l.Players.Add(p);
+            p.Scores.Add(s);
+
+            context.Levels.Add(l);
+            context.SaveChanges();
         }
     }
 }
