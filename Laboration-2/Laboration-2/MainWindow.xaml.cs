@@ -183,7 +183,7 @@ namespace Laboration_2
                 isEditing = false;
 
                 var query = from score in context.Scores
-                            where score.ScoreId == score.Levels.LevelId && score.Levels.Players.All(y => y.PlayerId == score.ScoreId)
+                            where score.Levels.Players.All(y => y.Name == nameInput && y.Scores.All(x => x.ScoreId == y.PlayerId))
                             select score;
 
                 foreach (var x in query)
