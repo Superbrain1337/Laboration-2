@@ -82,6 +82,7 @@ namespace Laboration_2
                 }
                 else
                 {
+                    //
                     MessageBox.Show("Du angav inget namn!");
                 }
 
