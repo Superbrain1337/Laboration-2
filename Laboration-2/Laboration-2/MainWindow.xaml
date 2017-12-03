@@ -13,5 +13,6 @@
         <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="25" Margin="18,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" KeyDown="TextBoxName_KeyDown"/>
         <Label x:Name="LabelInfoName" Content="Insert name and press enter" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
 
+
     </Grid>
 </Window>
