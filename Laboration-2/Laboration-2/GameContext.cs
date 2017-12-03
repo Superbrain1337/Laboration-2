@@ -9,7 +9,9 @@ namespace Laboration_2
 {
     public class GameContext : DbContext
     {
-        private const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration-2-Database;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration-2-Database;
+                                                Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;
+                                                ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public GameContext() : base(connectionString) { }
 
