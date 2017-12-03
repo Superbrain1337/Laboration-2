@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Laboration_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="427.889" Width="652.889">
+        Title="MainWindow" Height="372.689" Width="362.089">
     <Grid>
-        <ListBox x:Name="ListBoxPlayer" HorizontalAlignment="Left" Height="129" Margin="46,36,0,0" VerticalAlignment="Top" Width="98" SelectionChanged="ListBoxPlayer_SelectionChanged"/>
-        <ListBox x:Name="ListBoxStatsInfo" HorizontalAlignment="Left" Height="288" Margin="369,36,0,0" VerticalAlignment="Top" Width="195"/>
+        <ListBox x:Name="ListBoxStatsInfo" HorizontalAlignment="Left" Height="288" Margin="142,36,0,0" VerticalAlignment="Top" Width="195"/>
         <Label HorizontalAlignment="Left" Margin="455,76,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="25" Margin="18,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" KeyDown="TextBoxName_KeyDown"/>
-        <Label x:Name="LabelInfoName" Content="Insert name and press enter" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="25" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TextBoxName_KeyDown"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="5,16,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextBoxLevelName" HorizontalAlignment="Left" Height="23" Margin="10,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TextBoxLevelName_KeyDown" IsEnabled="False"/>
+        <Label Content="Level name:" HorizontalAlignment="Left" Margin="5,66,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ButtonUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top" Width="75" Click="ButtonUpdate_Click"/>
+        <TextBox x:Name="TextBoxLevelId" HorizontalAlignment="Left" Height="23" Margin="10,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="TextBoxMoves" HorizontalAlignment="Left" Height="23" Margin="10,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="Level-Id:" HorizontalAlignment="Left" Margin="5,117,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moves used:" HorizontalAlignment="Left" Margin="5,168,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>

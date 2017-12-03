@@ -21,19 +21,17 @@ namespace Laboration_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        GuiGenerator guiGenerator = new GuiGenerator();
-        GameContext context;
+        private GuiGenerator guiGenerator = new GuiGenerator();
+        private GameContext context;
 
+        private string nameInput;
+        private bool isEditing = false;
 
         public MainWindow()
         {
             InitializeComponent();
             context = new GameContext();
-
-            
             WriteNamesToListBox();
-
-            
         }
 
         /// <summary>
@@ -106,6 +104,7 @@ namespace Laboration_2
                 }
                 else
                 {
+                    //
                     MessageBox.Show("Du angav inget namn!");
                 }
 
@@ -143,6 +142,16 @@ namespace Laboration_2
 
             ListBoxPlayer.Items.Add(p.Name);
 
+
+
+            s.Levels = l;
+            s.AmountOfMovesUsed = 0;
+
+            l.Players.Add(p);
+            p.Scores.Add(s);
+
+            context.Levels.Add(l);
+            context.SaveChanges();
         }
 
         private void AddItems()
@@ -162,7 +171,7 @@ namespace Laboration_2
 
             s.Levels = l;
             s.AmountOfMovesUsed = 1;
-
+            
             l.Players.Add(p);
             p.Scores.Add(s);
 
@@ -179,6 +188,62 @@ namespace Laboration_2
             guiGenerator.GenerateListData(ref ListBoxStatsInfo, temp, item.ToString());
 
 
+        }
+
+        private void TextBoxLevelName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string levelName = TextBoxLevelName.Text;
+
+                if (!string.IsNullOrEmpty(TextBoxLevelName.Text))
+                {
+                    var playerQuearyData = from p in context.Players
+                                           where nameInput == p.Name
+                                           select p.Name;
+
+                    Level level = new Level() { Name = levelName, AmountOfMoves = 6, Players = new List<Player>() };
+
+                    Player player = new Player() { Name = nameInput, Scores = new List<Score>() };
+
+                    Score score = new Score() { Levels = level, AmountOfMovesUsed = 0 };
+
+                    level.Players.Add(player);
+                    player.Scores.Add(score);
+                    context.Levels.Add(level);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if(!isEditing)
+            {
+                TextBoxLevelId.IsEnabled = true;
+                TextBoxMoves.IsEnabled = true;
+                ButtonUpdate.Content = "DONE";
+                isEditing = true;
+            }
+            else if(isEditing)
+            {
+                TextBoxLevelId.IsEnabled = false;
+                TextBoxMoves.IsEnabled = false;
+                ButtonUpdate.Content = "UPDATE";
+                isEditing = false;
+
+                var query = from score in context.Scores
+                            where score.Levels.Players.All(y => y.Name == nameInput && y.Scores.All(x => x.ScoreId == y.PlayerId))
+                            select score;
+
+                foreach (var x in query)
+                    x.AmountOfMovesUsed = int.Parse(TextBoxMoves.Text);
+
+                TextBoxLevelId.Clear();
+                TextBoxMoves.Clear();
+
+                context.SaveChanges();
+            }
         }
     }
 }
