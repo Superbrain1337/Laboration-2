@@ -61,7 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GetInfoFromDB.cs" />
+    <Compile Include="DataHandeler.cs" />
     <Compile Include="Migrations\201711301227084_InitialCreate.cs" />
     <Compile Include="Migrations\201711301227084_InitialCreate.Designer.cs">
       <DependentUpon>201711301227084_InitialCreate.cs</DependentUpon>
@@ -76,7 +76,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GuiGenerator.cs" />
+    <Compile Include="GuiHandeler.cs" />
     <Compile Include="GameContext.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MainWindow.xaml.cs">

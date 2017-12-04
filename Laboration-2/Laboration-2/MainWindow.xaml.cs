@@ -21,101 +21,35 @@ namespace Laboration_2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GuiGenerator guiGenerator = new GuiGenerator();
-        private GameContext context;
+        private GuiHandeler guiHandeler = new GuiHandeler();
+        private DataHandeler dataHandeler = new DataHandeler();
 
-        private string nameInput;
-        private bool isEditing = false;
+        private bool isAddingLevel = false;
+        private bool isEditingScore = false;
 
         public MainWindow()
         {
+
+            dataHandeler.ClearDataBas();
+
             InitializeComponent();
-            context = new GameContext();
-            WriteNamesToListBox();
+
+            WriteNamesAndLevelsToListBoxesForDebugPurpes();
         }
 
-        /// <summary>
-        /// Kod för debug syfte
-        /// </summary>
-        private void WriteNamesToListBox()
+
+        private void WriteNamesAndLevelsToListBoxesForDebugPurpes()
         {
+            ListBoxPlayersDebugPurpose.Items.Clear();
+            ListBoxLevelsDebugPurpose.Items.Clear();
 
-            // Kod för debug syfte så man ser
-            //vilka spelare som finns i databasen
-
-            var playerQuearyData = (from x in context.Levels
-                                    select x.Players.Select(y => y.Name)).ToList();
-
-
-
-            foreach (var val in playerQuearyData)
-            {
-                foreach (var val2 in val)
-                {
-                    ListBoxPlayer.Items.Add(val2);
-                }
-
-            }
-
-
-
+            guiHandeler.WriteOutPlayersToListbox(dataHandeler.GetPlayers(), ref ListBoxPlayersDebugPurpose);
+            guiHandeler.WriteOutLevelsToListbox(dataHandeler.GetLevels(), ref ListBoxLevelsDebugPurpose);
         }
 
 
 
-        private void TextBoxName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                string name = TextBoxName.Text;
-
-
-
-
-                // Om empty vissa messagebox
-                if (!string.IsNullOrEmpty(name))
-                {
-
-                    
-                    List<Level> levelsPlayerHavePlayed = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, name);
-
-
-
-
-                    // Om spelare finns skriv all info till listbox
-                    if (levelsPlayerHavePlayed.Count > 0)
-                    {
-                        guiGenerator.GenerateListData(ref ListBoxStatsInfo, levelsPlayerHavePlayed,name);
-                    }
-                    else
-                    {
-                        // Om ej finns skapa ny spelare
-                        // Med det namnet
-                        AddNewPlayer(name);
-
-                        List<Level> getInfoAboutNewPlayer = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, name);
-
-                        guiGenerator.GenerateListData(ref ListBoxStatsInfo, getInfoAboutNewPlayer,name);
-
-                    }
-
-                    TextBoxName.Text = "";
-
-                }
-                else
-                {
-                    //
-                    MessageBox.Show("Du angav inget namn!");
-                }
-
-
-            }
-            
-        }
-
-
-
-
+        /*
         private void AddNewPlayer(string name)
         {
             Level l = new Level();
@@ -140,7 +74,7 @@ namespace Laboration_2
             context.Levels.Add(l);
             context.SaveChanges();
 
-            ListBoxPlayer.Items.Add(p.Name);
+            ListBoxPlayersDebugPurpose.Items.Add(p.Name);
 
 
 
@@ -153,97 +87,226 @@ namespace Laboration_2
             context.Levels.Add(l);
             context.SaveChanges();
         }
-
-        private void AddItems()
-        {
-            Level l = new Level();
-            l.Name = "Level 01";
-            l.AmountOfMoves = 4;
-            l.Players = new List<Player>();
-
-            Player p = new Player();
-            p.Name = "Linus";
-            p.Scores = new List<Score>();
-
-            Score s = new Score();
+        */
 
 
-
-            s.Levels = l;
-            s.AmountOfMovesUsed = 1;
-            
-            l.Players.Add(p);
-            p.Scores.Add(s);
-
-            context.Levels.Add(l);
-            context.SaveChanges();
-        }
-
-        private void ListBoxPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var item = ListBoxPlayer.SelectedItem;
-
-            List<Level> temp = GetInfoFromDB.GetListOfLevelsPlayerHasPlayed(context, item.ToString());
-
-            guiGenerator.GenerateListData(ref ListBoxStatsInfo, temp, item.ToString());
-
-
-        }
-
-        private void TextBoxLevelName_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                string levelName = TextBoxLevelName.Text;
-
-                if (!string.IsNullOrEmpty(TextBoxLevelName.Text))
-                {
-                    var playerQuearyData = from p in context.Players
-                                           where nameInput == p.Name
-                                           select p.Name;
-
-                    Level level = new Level() { Name = levelName, AmountOfMoves = 6, Players = new List<Player>() };
-
-                    Player player = new Player() { Name = nameInput, Scores = new List<Score>() };
-
-                    Score score = new Score() { Levels = level, AmountOfMovesUsed = 0 };
-
-                    level.Players.Add(player);
-                    player.Scores.Add(score);
-                    context.Levels.Add(level);
-                    context.SaveChanges();
-                }
-            }
-        }
 
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if(!isEditing)
+            if (!isEditingScore)
             {
                 TextBoxLevelId.IsEnabled = true;
                 TextBoxMoves.IsEnabled = true;
+                TextBoxName.IsEnabled = true;
+
+
+                ButtonAddLevel.IsEnabled = false;
+                ButtonFindOrAddPlayer.IsEnabled = false;
+
                 ButtonUpdate.Content = "DONE";
-                isEditing = true;
+                isEditingScore = true;
             }
-            else if(isEditing)
+            else if (isEditingScore)
             {
+
+
+
+
+
+                string nameInput = TextBoxName.Text;
+                int levelIdInput;
+                int scoreInput;
+
+                if (int.TryParse(TextBoxMoves.Text, out scoreInput))
+                {
+                    if (int.TryParse(TextBoxLevelId.Text, out levelIdInput))
+                    {
+
+                        Level getLevel = dataHandeler.GetLevelById(levelIdInput);
+
+                        if (getLevel != null)
+                        {
+
+                            Player getPlayer = dataHandeler.GetPlayerByName(nameInput);
+
+                            if (getPlayer != null)
+                            {
+                                Score getScore = dataHandeler.GetScore(getPlayer, getLevel);
+
+                                if (getScore != null)
+                                {
+                                    // Spelare har spelat bannan
+                                    dataHandeler.SetPlayerScore(getPlayer,getLevel,getScore, scoreInput);
+                                }
+                                else
+                                {
+                                    // Spelaren har inte spelat bannan
+                                    dataHandeler.AddNewMapToPlayerAndScore(getPlayer, getLevel, scoreInput);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Player finns ej");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Leveln finns ej skriv in annat id");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Du skrev inte in ett level id");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Du skrev inte in ett score");
+                }
+
+
+
+                ButtonFindOrAddPlayer.IsEnabled = true;
+                ButtonAddLevel.IsEnabled = true;
+
                 TextBoxLevelId.IsEnabled = false;
-                TextBoxMoves.IsEnabled = false;
-                ButtonUpdate.Content = "UPDATE";
-                isEditing = false;
-
-                var query = from score in context.Scores
-                            where score.Levels.Players.All(y => y.Name == nameInput && y.Scores.All(x => x.ScoreId == y.PlayerId))
-                            select score;
-
-                foreach (var x in query)
-                    x.AmountOfMovesUsed = int.Parse(TextBoxMoves.Text);
-
                 TextBoxLevelId.Clear();
+
+                TextBoxMoves.IsEnabled = false;
                 TextBoxMoves.Clear();
 
-                context.SaveChanges();
+                ButtonUpdate.Content = "UPDATE";
+                isEditingScore = false;
+
             }
+
+
+        }
+
+        private void ButtonAddLevel_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isAddingLevel)
+            {
+                
+                TextBoxName.IsEnabled = false;
+
+                TextBoxLevelName.IsEnabled = true;
+                TextBoxMaxMovesForNewMap.IsEnabled = true;
+
+
+                ButtonUpdate.IsEnabled = false;
+                ButtonFindOrAddPlayer.IsEnabled = false;
+
+                ButtonAddLevel.Content = "Done";
+
+                isAddingLevel = true;
+            }
+            else
+            {
+                isAddingLevel = false;
+                string levelName = TextBoxLevelName.Text;
+                int maxMoves;
+
+                // string.IsNullOrEmpty(TextBoxMaxMovesForNewMap.Text) && 
+                if (int.TryParse(TextBoxMaxMovesForNewMap.Text,out maxMoves))
+                {
+
+
+                    if (!string.IsNullOrEmpty(levelName))
+                    {
+                        dataHandeler.AddNewMap(levelName, maxMoves);
+
+                        // För debug
+                        WriteNamesAndLevelsToListBoxesForDebugPurpes();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Du angav inget level name");
+                    }
+
+
+                }
+                else
+                {
+                    MessageBox.Show("Du skrev inte in max moves för den ny leveln");
+                }
+
+
+                ButtonAddLevel.Content = "Add level";
+                TextBoxMoves.IsEnabled = false;
+
+                TextBoxLevelName.IsEnabled = false;
+                TextBoxLevelName.Clear();
+
+
+                TextBoxMaxMovesForNewMap.IsEnabled = false;
+                TextBoxMaxMovesForNewMap.Clear();
+
+                ButtonUpdate.IsEnabled = true;
+                ButtonFindOrAddPlayer.IsEnabled = true;
+                
+                TextBoxName.IsEnabled = true;
+
+            }
+        }
+
+        private void ButtonFindOrAddPlayer_Click(object sender, RoutedEventArgs e)
+        {
+
+            string name = TextBoxName.Text;
+
+            // Om empty vissa messagebox
+            if (!string.IsNullOrEmpty(name))
+            {
+
+
+                Player getPlayer = dataHandeler.GetPlayerByName(name);
+
+
+                // Om spelare finns skriv all info till listbox
+                if (getPlayer != null)
+                {
+                    guiHandeler.GenerateListData(ref ListBoxStatsInfo, getPlayer);
+                }
+                else
+                {
+                    // Om ej finns skapa ny spelare
+                    dataHandeler.AddNewPlayer(name);
+
+                    // For Debug
+                    WriteNamesAndLevelsToListBoxesForDebugPurpes();
+
+                    MessageBox.Show("La till spelare " + name);
+
+                }
+
+                TextBoxName.Clear();
+
+            }
+            else
+            {
+                MessageBox.Show("Du angav inget namn!");
+            }
+
+
+
+        }
+
+        private void ListBoxShowPlayersDebugPurpose_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+            var item = ListBoxPlayersDebugPurpose.SelectedItem;
+
+            Player temp = dataHandeler.GetPlayerByName(item.ToString());
+
+            if (temp != null)
+                guiHandeler.GenerateListData(ref ListBoxStatsInfo, temp);
+
+        }
+
+        private void TextBoxMaxMovesForNewMap_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
