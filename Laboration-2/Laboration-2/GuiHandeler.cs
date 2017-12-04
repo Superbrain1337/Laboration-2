@@ -7,9 +7,9 @@ using System.Windows.Controls;
 
 namespace Laboration_2
 {
-    class GuiGenerator
+    class GuiHandeler
     {
-        public void GenerateListData(ref ListBox inputListBox, List<Level> listOfLevelsPlayerHasPlayed,string name)
+        public void GenerateListData(ref ListBox inputListBox, Player player)
         {
 
             // Tar in alla levels en spelare har spelar på
@@ -21,10 +21,10 @@ namespace Laboration_2
             inputListBox.Items.Clear();
 
 
-            string playerName = " ===  " + name + "  === " + "\r\n\r\n";
+            string playerName = " ===  " + player.Name + "  === " + "\r\n\r\n";
 
 
-            for (int i = 0; i != listOfLevelsPlayerHasPlayed.Count(); i++)
+            for (int i = 0; i != player.Scores.Count(); i++)
             {
 
 
@@ -33,19 +33,18 @@ namespace Laboration_2
 
                 tempItemControlLevelData.Height = 70;
                 tempItemControlLevelData.Width = 135;
-                
-                //nummberOfMovesDone += playerQuearyData[i].
-                nummberOfMovesAccepted += listOfLevelsPlayerHasPlayed[i].AmountOfMoves;
-                
+
+                nummberOfMovesDone += player.Scores[i].AmountOfMovesUsed; 
+                nummberOfMovesAccepted += player.Scores[i].Levels.AmountOfMoves;
 
 
                 Label tempInfoLabelData = new Label();
 
                 tempInfoLabelData.Content = playerName;
-                tempInfoLabelData.Content += "Level : " + listOfLevelsPlayerHasPlayed[i].Name + "\r\n";
-                tempInfoLabelData.Content += "Moves made : " + listOfLevelsPlayerHasPlayed[i].Players[0].Scores[0].AmountOfMovesUsed + "\r\n";
-                tempInfoLabelData.Content += "Moves left : " + (listOfLevelsPlayerHasPlayed[i].AmountOfMoves - listOfLevelsPlayerHasPlayed[i].Players[0].Scores[0].AmountOfMovesUsed) + "\r\n";
-                tempInfoLabelData.Content += "Moves available : " + listOfLevelsPlayerHasPlayed[i].AmountOfMoves + "\r\n";
+                tempInfoLabelData.Content += "Level : " + player.Scores[i].Levels.Name + "\r\n";
+                tempInfoLabelData.Content += "Moves made : " + player.Scores[i].AmountOfMovesUsed  + "\r\n";
+                tempInfoLabelData.Content += "Moves left : " + (player.Scores[i].Levels.AmountOfMoves - player.Scores[i].AmountOfMovesUsed) + "\r\n";
+                tempInfoLabelData.Content += "Moves available : " + player.Scores[i].Levels.AmountOfMoves + "\r\n";
                 tempInfoLabelData.Content += "-----------------";
 
 
@@ -71,6 +70,31 @@ namespace Laboration_2
             inputListBox.Items.Add(tempItemControlStats);
 
         }
+
+
+        public void WriteOutLevelsToListbox(List<Level> temp, ref ListBox listBox)
+        {
+            if(temp.Count > 0)
+            {
+                foreach(Level val in temp)
+                {
+                    listBox.Items.Add(val.Name + " Id : " + val.LevelId);
+                }
+            }
+        }
+
+        public void WriteOutPlayersToListbox(List<Player> temp,ref ListBox listbox)
+        {
+            if(temp.Count > 0)
+            {
+                foreach(Player val in temp)
+                {
+                    listbox.Items.Add(val.Name);
+                }
+            }
+        }
+
+
     }
 }
 
