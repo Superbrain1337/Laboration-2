@@ -23,7 +23,10 @@ namespace Laboration_2
             var playerConfig = modelBuilder.Entity<Player>();
             var scoreConfig = modelBuilder.Entity<Score>();
 
+            playerConfig.ToTable("Players");
+            levelConfig.ToTable("Levels");
             scoreConfig.ToTable("Scores");
+
 
             levelConfig.HasMany(l => l.Players);
             playerConfig.HasMany(p => p.Scores);
@@ -31,5 +34,7 @@ namespace Laboration_2
 
             base.OnModelCreating(modelBuilder);
         }
+
+
     }
 }

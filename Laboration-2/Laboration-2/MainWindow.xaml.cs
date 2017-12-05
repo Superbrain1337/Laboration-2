@@ -22,7 +22,7 @@ namespace Laboration_2
     public partial class MainWindow : Window
     {
         private GuiHandeler guiHandeler = new GuiHandeler();
-        private DataHandeler dataHandeler = new DataHandeler();
+        private DataHandeler dataHandeler;
 
         private bool isAddingLevel = false;
         private bool isEditingScore = false;
@@ -34,6 +34,8 @@ namespace Laboration_2
 
             InitializeComponent();
 
+
+            dataHandeler = new DataHandeler();
             WriteNamesAndLevelsToListBoxesForDebugPurpes();
         }
 
