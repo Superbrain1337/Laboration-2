@@ -30,7 +30,7 @@ namespace Laboration_2
         public MainWindow()
         {
 
-            dataHandeler.ClearDataBas();
+            //dataHandeler.ClearDataBas();
 
             InitializeComponent();
 
