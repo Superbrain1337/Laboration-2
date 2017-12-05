@@ -13,7 +13,8 @@ namespace Laboration_2
         [Key]
         public int PlayerId { get; set; }
         [Column("Name", TypeName = "nvarchar")]
-        [MaxLength(32)]
+        [Required]
+        [StringLength(32)]
         public string Name { get; set; }
         public virtual IList<Score> Scores { get; set; }
     }

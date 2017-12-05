@@ -35,8 +35,6 @@ namespace Laboration_2
             InitializeComponent();
 
             WriteNamesAndLevelsToListBoxesForDebugPurpes();
-
-
         }
 
 

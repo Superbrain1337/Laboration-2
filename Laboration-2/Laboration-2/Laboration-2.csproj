@@ -70,6 +70,18 @@
     <Compile Include="Migrations\201712051044437_AnnotationsInPlayer.Designer.cs">
       <DependentUpon>201712051044437_AnnotationsInPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712051210346_AnnotationEverything.cs" />
+    <Compile Include="Migrations\201712051210346_AnnotationEverything.Designer.cs">
+      <DependentUpon>201712051210346_AnnotationEverything.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712051352051_AddedRelations.cs" />
+    <Compile Include="Migrations\201712051352051_AddedRelations.Designer.cs">
+      <DependentUpon>201712051352051_AddedRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712051401507_AddedScore.cs" />
+    <Compile Include="Migrations\201712051401507_AddedScore.Designer.cs">
+      <DependentUpon>201712051401507_AddedScore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Score.cs" />
     <Page Include="MainWindow.xaml">
@@ -108,6 +120,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712051044437_AnnotationsInPlayer.resx">
       <DependentUpon>201712051044437_AnnotationsInPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712051210346_AnnotationEverything.resx">
+      <DependentUpon>201712051210346_AnnotationEverything.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712051352051_AddedRelations.resx">
+      <DependentUpon>201712051352051_AddedRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712051401507_AddedScore.resx">
+      <DependentUpon>201712051401507_AddedScore.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
