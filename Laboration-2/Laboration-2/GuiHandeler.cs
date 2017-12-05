@@ -21,8 +21,9 @@ namespace Laboration_2
             inputListBox.Items.Clear();
 
 
-            string playerName = " ===  " + player.Name + "  === " + "\r\n\r\n";
+            string playerName = "=====  " + player.Name + "  =====";
 
+            inputListBox.Items.Add(playerName);
 
             for (int i = 0; i != player.Scores.Count(); i++)
             {
@@ -40,8 +41,8 @@ namespace Laboration_2
 
                 Label tempInfoLabelData = new Label();
 
-                tempInfoLabelData.Content = playerName;
-                tempInfoLabelData.Content += "Level : " + player.Scores[i].Levels.Name + "\r\n";
+
+                tempInfoLabelData.Content = "Level : " + player.Scores[i].Levels.Name + "\r\n";
                 tempInfoLabelData.Content += "Moves made : " + player.Scores[i].AmountOfMovesUsed  + "\r\n";
                 tempInfoLabelData.Content += "Moves left : " + (player.Scores[i].Levels.AmountOfMoves - player.Scores[i].AmountOfMovesUsed) + "\r\n";
                 tempInfoLabelData.Content += "Moves available : " + player.Scores[i].Levels.AmountOfMoves + "\r\n";
