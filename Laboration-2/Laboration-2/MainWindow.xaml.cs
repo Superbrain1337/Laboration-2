@@ -30,11 +30,13 @@ namespace Laboration_2
         public MainWindow()
         {
 
-            dataHandeler.ClearDataBas();
+            //dataHandeler.ClearDataBas();
 
             InitializeComponent();
 
             WriteNamesAndLevelsToListBoxesForDebugPurpes();
+
+
         }
 
 
@@ -136,7 +138,7 @@ namespace Laboration_2
                                 if (getScore != null)
                                 {
                                     // Spelare har spelat bannan
-                                    dataHandeler.SetPlayerScore(getPlayer,getLevel,getScore, scoreInput);
+                                    dataHandeler.SetPlayerScore(getPlayer, getLevel, getScore, scoreInput);
                                 }
                                 else
                                 {
@@ -187,7 +189,7 @@ namespace Laboration_2
         {
             if (!isAddingLevel)
             {
-                
+
                 TextBoxName.IsEnabled = false;
 
                 TextBoxLevelName.IsEnabled = true;
@@ -208,7 +210,7 @@ namespace Laboration_2
                 int maxMoves;
 
                 // string.IsNullOrEmpty(TextBoxMaxMovesForNewMap.Text) && 
-                if (int.TryParse(TextBoxMaxMovesForNewMap.Text,out maxMoves))
+                if (int.TryParse(TextBoxMaxMovesForNewMap.Text, out maxMoves))
                 {
 
 
@@ -244,7 +246,7 @@ namespace Laboration_2
 
                 ButtonUpdate.IsEnabled = true;
                 ButtonFindOrAddPlayer.IsEnabled = true;
-                
+
                 TextBoxName.IsEnabled = true;
 
             }
@@ -294,7 +296,10 @@ namespace Laboration_2
 
         private void ListBoxShowPlayersDebugPurpose_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-
+            if (ListBoxPlayersDebugPurpose.SelectedItem == null)
+            {
+                return;
+            }
             var item = ListBoxPlayersDebugPurpose.SelectedItem;
 
             Player temp = dataHandeler.GetPlayerByName(item.ToString());

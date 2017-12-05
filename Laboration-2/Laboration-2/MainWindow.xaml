@@ -5,27 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Laboration_2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="372.689" Width="1005.05">
+        Title="MainWindow" Height="421.489" Width="1005.05">
     <Grid>
-        <ListBox x:Name="ListBoxStatsInfo" HorizontalAlignment="Left" Height="288" Margin="142,36,0,0" VerticalAlignment="Top" Width="221"/>
+        <ListBox x:Name="ListBoxStatsInfo" HorizontalAlignment="Left" Height="334" Margin="166,36,0,0" VerticalAlignment="Top" Width="221"/>
         <Label HorizontalAlignment="Left" Margin="455,76,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TextBoxName" HorizontalAlignment="Left" Height="25" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Name:" HorizontalAlignment="Left" Margin="5,16,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TextBoxLevelName" HorizontalAlignment="Left" Height="25" Margin="10,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="Level name:" HorizontalAlignment="Left" Margin="5,66,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="ButtonUpdate" Content="Update Score" HorizontalAlignment="Left" Margin="10,259,0,0" VerticalAlignment="Top" Width="120" Click="ButtonUpdate_Click" Height="25"/>
-        <TextBox x:Name="TextBoxLevelId" HorizontalAlignment="Left" Height="25" Margin="10,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="TextBoxMoves" HorizontalAlignment="Left" Height="25" Margin="10,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label Content="Level-Id:" HorizontalAlignment="Left" Margin="5,117,0,0" VerticalAlignment="Top"/>
-        <Label Content="Moves used:" HorizontalAlignment="Left" Margin="5,168,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ButtonUpdate" Content="Update Score" HorizontalAlignment="Left" Margin="10,305,0,0" VerticalAlignment="Top" Width="120" Click="ButtonUpdate_Click" Height="25"/>
+        <TextBox x:Name="TextBoxLevelId" HorizontalAlignment="Left" Height="26" Margin="10,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="TextBoxMoves" HorizontalAlignment="Left" Height="26" Margin="10,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="Level-Id:" HorizontalAlignment="Left" Margin="5,163,0,0" VerticalAlignment="Top"/>
+        <Label Content="Moves used:" HorizontalAlignment="Left" Margin="5,214,0,0" VerticalAlignment="Top"/>
         <ListBox x:Name="ListBoxPlayersDebugPurpose" HorizontalAlignment="Left" Height="258" Margin="542,80,0,0" VerticalAlignment="Top" Width="205" SelectionChanged="ListBoxShowPlayersDebugPurpose_SelectionChanged_1"/>
-        <Button x:Name="ButtonAddLevel" Content="Add new level" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="ButtonAddLevel_Click"/>
+        <Button x:Name="ButtonAddLevel" Content="Add new level" HorizontalAlignment="Left" Margin="10,345,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="ButtonAddLevel_Click"/>
         <Label x:Name="LabelInfoPlayer" Content="Payer List i Debug Syfte" HorizontalAlignment="Left" Margin="542,30,0,0" VerticalAlignment="Top" Width="205" FontSize="14" FontWeight="Bold"/>
         <ListBox x:Name="ListBoxLevelsDebugPurpose" HorizontalAlignment="Left" Height="258" Margin="768,72,0,0" VerticalAlignment="Top" Width="205"/>
         <Label x:Name="LabelInfoMaps" Content="Level List i Debug Syfte" HorizontalAlignment="Left" Margin="768,22,0,0" VerticalAlignment="Top" Width="205" FontSize="14" FontWeight="Bold"/>
-        <Button x:Name="ButtonFindOrAddPlayer" Content="Find or add Player" HorizontalAlignment="Left" Margin="10,219,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="ButtonFindOrAddPlayer_Click"/>
-        <TextBox x:Name="TextBoxMaxMovesForNewMap" HorizontalAlignment="Left" Height="38" Margin="382,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" TextChanged="TextBoxMaxMovesForNewMap_TextChanged" IsEnabled="False"/>
-        <Label Content="Max moves for new map" HorizontalAlignment="Left" Margin="368,99,0,0" VerticalAlignment="Top" Width="156"/>
+        <Button x:Name="ButtonFindOrAddPlayer" Content="Find or add Player" HorizontalAlignment="Left" Margin="10,265,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="ButtonFindOrAddPlayer_Click"/>
+        <TextBox x:Name="TextBoxMaxMovesForNewMap" HorizontalAlignment="Left" Height="26" Margin="10,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBoxMaxMovesForNewMap_TextChanged" IsEnabled="False"/>
+        <Label Content="Max moves on level" HorizontalAlignment="Left" Margin="5,117,0,0" VerticalAlignment="Top" Width="156"/>
 
 
     </Grid>
