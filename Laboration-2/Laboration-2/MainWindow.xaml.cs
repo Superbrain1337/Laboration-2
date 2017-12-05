@@ -49,50 +49,6 @@ namespace Laboration_2
             guiHandeler.WriteOutLevelsToListbox(dataHandeler.GetLevels(), ref ListBoxLevelsDebugPurpose);
         }
 
-
-
-        /*
-        private void AddNewPlayer(string name)
-        {
-            Level l = new Level();
-            l.Name = "Level 01";
-            l.AmountOfMoves = 4;
-            l.Players = new List<Player>();
-
-            Player p = new Player();
-            p.Name = name;
-            p.Scores = new List<Score>();
-
-            Score s = new Score();
-
-
-
-            s.Levels = l;
-            s.AmountOfMovesUsed = 0;
-
-            l.Players.Add(p);
-            p.Scores.Add(s);
-
-            context.Levels.Add(l);
-            context.SaveChanges();
-
-            ListBoxPlayersDebugPurpose.Items.Add(p.Name);
-
-
-
-            s.Levels = l;
-            s.AmountOfMovesUsed = 0;
-
-            l.Players.Add(p);
-            p.Scores.Add(s);
-
-            context.Levels.Add(l);
-            context.SaveChanges();
-        }
-        */
-
-
-
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (!isEditingScore)
