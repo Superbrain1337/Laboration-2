@@ -9,7 +9,7 @@ namespace Laboration_2
 {
     class GuiHandeler
     {
-        public void GenerateListData(ref ListBox inputListBox, Player player)
+        public void GenerateListData(ref ListBox inputListBox, Player player,List<Player> playerList)
         {
 
             // Tar in alla levels en spelare har spelar på
@@ -20,22 +20,37 @@ namespace Laboration_2
 
             inputListBox.Items.Clear();
 
-
-            string playerName = "=====  " + player.Name + "  =====";
+            string playerName = "========  " + player.Name + "  ========";
 
             inputListBox.Items.Add(playerName);
 
             for (int i = 0; i != player.Scores.Count(); i++)
             {
+                
+                int indexBestPlayer = 0 ;
+                int bestMoveCount = player.Scores[i].AmountOfMovesUsed;
 
-
+                for (int x = 0; x != playerList.Count; x++)
+                {
+                    for (int z = 0; z != playerList[x].Scores.Count ; z++)
+                    {
+                        if(player.Scores[i].Levels == playerList[x].Scores[z].Levels)
+                        {
+                            if(bestMoveCount >= playerList[x].Scores[z].AmountOfMovesUsed)
+                            {
+                                indexBestPlayer = x;
+                                bestMoveCount = playerList[x].Scores[z].AmountOfMovesUsed;
+                            }
+                        }
+                    }
+                }
 
                 ItemsControl tempItemControlLevelData = new ItemsControl();
 
-                tempItemControlLevelData.Height = 70;
-                tempItemControlLevelData.Width = 135;
+                tempItemControlLevelData.Height = 150;
+                tempItemControlLevelData.Width = 221;
 
-                nummberOfMovesDone += player.Scores[i].AmountOfMovesUsed; 
+                nummberOfMovesDone += player.Scores[i].AmountOfMovesUsed;
                 nummberOfMovesAccepted += player.Scores[i].Levels.AmountOfMoves;
 
 
@@ -43,10 +58,13 @@ namespace Laboration_2
 
 
                 tempInfoLabelData.Content = "Level : " + player.Scores[i].Levels.Name + "\r\n";
-                tempInfoLabelData.Content += "Moves made : " + player.Scores[i].AmountOfMovesUsed  + "\r\n";
+                tempInfoLabelData.Content += "Moves made : " + player.Scores[i].AmountOfMovesUsed + "\r\n";
                 tempInfoLabelData.Content += "Moves left : " + (player.Scores[i].Levels.AmountOfMoves - player.Scores[i].AmountOfMovesUsed) + "\r\n";
-                tempInfoLabelData.Content += "Moves available : " + player.Scores[i].Levels.AmountOfMoves + "\r\n";
-                tempInfoLabelData.Content += "-----------------";
+                tempInfoLabelData.Content += "Moves available : " + player.Scores[i].Levels.AmountOfMoves + "\r\n\r\n";
+                tempInfoLabelData.Content += "Best Player : " + playerList[indexBestPlayer].Name + "\r\n";
+                tempInfoLabelData.Content += "Best Moves : " + bestMoveCount + "\r\n";
+                tempInfoLabelData.Content += "Best Player Moves Left : " + (player.Scores[i].Levels.AmountOfMoves - bestMoveCount) + "\r\n";
+                tempInfoLabelData.Content += "-------------------------------";
 
 
                 tempItemControlLevelData.Items.Add(tempInfoLabelData);
@@ -79,7 +97,7 @@ namespace Laboration_2
             {
                 foreach(Level val in temp)
                 {
-                    listBox.Items.Add(val.Name + " Id : " + val.LevelId);
+                    listBox.Items.Add(val.Name + " Id : " + val.LevelId + " Max moves : " + val.AmountOfMoves);
                 }
             }
         }

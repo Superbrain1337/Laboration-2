@@ -29,13 +29,17 @@ namespace Laboration_2
 
         public MainWindow()
         {
-
-            //dataHandeler.ClearDataBas();
-
+            
             InitializeComponent();
 
 
             dataHandeler = new DataHandeler();
+
+
+            dataHandeler.ClearDataBas();
+
+
+
             WriteNamesAndLevelsToListBoxesForDebugPurpes();
         }
 
@@ -84,27 +88,37 @@ namespace Laboration_2
 
                         if (getLevel != null)
                         {
-
-                            Player getPlayer = dataHandeler.GetPlayerByName(nameInput);
-
-                            if (getPlayer != null)
+                            if (getLevel.AmountOfMoves >= scoreInput && scoreInput > 0)
                             {
-                                Score getScore = dataHandeler.GetScore(getPlayer, getLevel);
 
-                                if (getScore != null)
+                                Player getPlayer = dataHandeler.GetPlayerByName(nameInput);
+
+                                if (getPlayer != null)
                                 {
-                                    // Spelare har spelat bannan
-                                    dataHandeler.SetPlayerScore(getPlayer, getLevel, getScore, scoreInput);
+                                    Score getScore = dataHandeler.GetScore(getPlayer, getLevel);
+
+                                    if (getScore != null)
+                                    {
+                                        // Spelare har spelat bannan
+                                        dataHandeler.SetPlayerScore(getPlayer, getLevel, getScore, scoreInput);
+                                    }
+                                    else
+                                    {
+                                        // Spelaren har inte spelat bannan
+                                        dataHandeler.AddNewMapToPlayerAndScore(getPlayer, getLevel, scoreInput);
+                                    }
+
+                                    MessageBox.Show("Du uppdaterade score för spelaren " + nameInput);
+
                                 }
                                 else
                                 {
-                                    // Spelaren har inte spelat bannan
-                                    dataHandeler.AddNewMapToPlayerAndScore(getPlayer, getLevel, scoreInput);
+                                    MessageBox.Show("Player finns ej");
                                 }
                             }
                             else
                             {
-                                MessageBox.Show("Player finns ej");
+                                MessageBox.Show("Felaktigt antal moves");
                             }
                         }
                         else
@@ -168,20 +182,39 @@ namespace Laboration_2
                 // string.IsNullOrEmpty(TextBoxMaxMovesForNewMap.Text) && 
                 if (int.TryParse(TextBoxMaxMovesForNewMap.Text, out maxMoves))
                 {
-
-
-                    if (!string.IsNullOrEmpty(levelName))
+                    if (maxMoves > 0)
                     {
-                        dataHandeler.AddNewMap(levelName, maxMoves);
 
-                        // För debug
-                        WriteNamesAndLevelsToListBoxesForDebugPurpes();
+
+                        if (!string.IsNullOrEmpty(levelName))
+                        {
+                            Level getlevel = dataHandeler.GetLevelByName(levelName);
+
+                            if (getlevel == null)
+                            {
+
+                                dataHandeler.AddNewMap(levelName, maxMoves);
+
+                                // För debug
+                                WriteNamesAndLevelsToListBoxesForDebugPurpes();
+
+                                MessageBox.Show("Du la till leveln " + levelName);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Det finns redan en level med det namnet!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Du angav inget level name");
+                        }
+
                     }
                     else
                     {
-                        MessageBox.Show("Du angav inget level name");
+                        MessageBox.Show("Felaktigt antal moves");
                     }
-
 
                 }
                 else
@@ -224,7 +257,7 @@ namespace Laboration_2
                 // Om spelare finns skriv all info till listbox
                 if (getPlayer != null)
                 {
-                    guiHandeler.GenerateListData(ref ListBoxStatsInfo, getPlayer);
+                    guiHandeler.GenerateListData(ref ListBoxStatsInfo, getPlayer,dataHandeler.GetPlayers());
                 }
                 else
                 {
@@ -261,7 +294,7 @@ namespace Laboration_2
             Player temp = dataHandeler.GetPlayerByName(item.ToString());
 
             if (temp != null)
-                guiHandeler.GenerateListData(ref ListBoxStatsInfo, temp);
+                guiHandeler.GenerateListData(ref ListBoxStatsInfo, temp,dataHandeler.GetPlayers());
 
         }
 
