@@ -97,6 +97,31 @@ namespace Laboration_2
             //return context.Levels.First(x => x.LevelId == levelId);
         }
 
+        public Level GetLevelByName(string levelName)
+        {
+            /*
+            List<Level> temp = (from x in context.Levels
+                                where x.Name == levelName
+                                select x).ToList();
+*/
+
+            var temp = context.Levels.Where(x => x.Name == levelName).ToList();
+
+
+            if (temp.Count != 0)
+            {
+                return temp[0];
+            }
+            else
+            {
+                return null;
+            }
+
+    
+        }
+
+
+
         public Score GetScore(Player player,Level level)
         {
             List<Score> temp = (from x in player.Scores
