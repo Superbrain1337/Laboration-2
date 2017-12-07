@@ -27,7 +27,6 @@ namespace Laboration_2
             levelConfig.ToTable("Levels");
             scoreConfig.ToTable("Scores");
 
-
             levelConfig.HasMany(l => l.Players);
             playerConfig.HasMany(p => p.Scores);
             scoreConfig.HasRequired(s => s.Levels);

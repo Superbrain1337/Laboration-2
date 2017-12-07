@@ -23,6 +23,7 @@ namespace Laboration_2
     {
         private GuiHandeler guiHandeler = new GuiHandeler();
         private DataHandeler dataHandeler;
+        private GameContext context;
 
         private bool isAddingLevel = false;
         private bool isEditingScore = false;

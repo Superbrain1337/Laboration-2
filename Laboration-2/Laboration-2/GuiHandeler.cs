@@ -30,6 +30,7 @@ namespace Laboration_2
 
 
 
+
                 ItemsControl tempItemControlLevelData = new ItemsControl();
 
                 tempItemControlLevelData.Height = 70;

@@ -15,13 +15,10 @@ namespace Laboration_2
             context = new GameContext();
         }
 
-
         public void ClearDataBas()
         {
 
             context.Players.RemoveRange(context.Players);
-
-
 
             var two = from x in context.Levels
                       select x;

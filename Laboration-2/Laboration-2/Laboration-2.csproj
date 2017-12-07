@@ -62,6 +62,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataHandeler.cs" />
+    <Compile Include="Migrations\201712070850289_InitialCreate.cs" />
+    <Compile Include="Migrations\201712070850289_InitialCreate.Designer.cs">
+      <DependentUpon>201712070850289_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071012389_FluentAPIMigration.cs" />
+    <Compile Include="Migrations\201712071012389_FluentAPIMigration.Designer.cs">
+      <DependentUpon>201712071012389_FluentAPIMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071034472_ScoreMigration.cs" />
+    <Compile Include="Migrations\201712071034472_ScoreMigration.Designer.cs">
+      <DependentUpon>201712071034472_ScoreMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071040232_ScoreContextMigration.cs" />
+    <Compile Include="Migrations\201712071040232_ScoreContextMigration.Designer.cs">
+      <DependentUpon>201712071040232_ScoreContextMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071047093_SeedMigration.cs" />
+    <Compile Include="Migrations\201712071047093_SeedMigration.Designer.cs">
+      <DependentUpon>201712071047093_SeedMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Score.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +115,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201712070850289_InitialCreate.resx">
+      <DependentUpon>201712070850289_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071012389_FluentAPIMigration.resx">
+      <DependentUpon>201712071012389_FluentAPIMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071034472_ScoreMigration.resx">
+      <DependentUpon>201712071034472_ScoreMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071040232_ScoreContextMigration.resx">
+      <DependentUpon>201712071040232_ScoreContextMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071047093_SeedMigration.resx">
+      <DependentUpon>201712071047093_SeedMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
